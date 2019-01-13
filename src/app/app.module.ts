@@ -1,11 +1,15 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { AppRoutingModule } from "./app-routing.module";
-import { AngularFireModule } from "angularfire2";
-import { AngularFirestoreModule } from "angularfire2/firestore";
-import { AngularFireAuthModule } from "angularfire2/auth";
 
+import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { AngularFireModule } from "@angular/fire";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from "@angular/fire/storage";
+import { AngularFireAuthModule } from "@angular/fire/auth";
 import { ChatComponent } from "./chat/chat.component";
 import { HomeComponent } from "./home/home.component";
 import { environment } from "src/environments/environment";
@@ -15,9 +19,13 @@ import { environment } from "src/environments/environment";
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireStorageModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
