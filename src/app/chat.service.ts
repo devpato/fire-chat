@@ -28,9 +28,27 @@ export class ChatService {
       );
   }
 
-  //Creating new chat
+  getUserChats() {
+    return this.auth.user$.pipe(
+      switchMap(user => {
+        return this.afs
+          .collection("chats", ref => ref.where("uid", "==", user.uid))
+          .snapshotChanges()
+          .pipe(
+            map(actions => {
+              return actions.map(a => {
+                const data: Object = a.payload.doc.data();
+                const id = a.payload.doc.id;
+                return { id, ...data };
+              });
+            })
+          );
+      })
+    );
+  }
+
   async create() {
-    const { uid } = await this.auth.getUser(); //To make sure we have an authicated user
+    const { uid } = await this.auth.getUser();
 
     const data = {
       uid,
@@ -53,11 +71,24 @@ export class ChatService {
       createdAt: Date.now()
     };
 
-    //if authetificated, send chat and add it to the chats array using arrayUnion for only adding one payload
     if (uid) {
       const ref = this.afs.collection("chats").doc(chatId);
       return ref.update({
         messages: firestore.FieldValue.arrayUnion(data)
+      });
+    }
+  }
+
+  async deleteMessage(chat, msg) {
+    const { uid } = await this.auth.getUser();
+
+    const ref = this.afs.collection("chats").doc(chat.id);
+    console.log(msg);
+    if (chat.uid === uid || msg.uid === uid) {
+      // Allowed to delete
+      delete msg.user;
+      return ref.update({
+        messages: firestore.FieldValue.arrayRemove(msg)
       });
     }
   }
