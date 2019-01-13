@@ -3,7 +3,10 @@ import { Router } from "@angular/router";
 
 import { auth } from "firebase/app";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore } from "@angular/fire/firestore";
+import {
+  AngularFirestore,
+  AngularFirestoreDocument
+} from "@angular/fire/firestore";
 
 import { Observable, of } from "rxjs";
 import { switchMap, first, map } from "rxjs/operators";
@@ -20,14 +23,14 @@ export class AuthService {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
-          return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
+          return this.afs.doc<string>(`users/${user.uid}`).valueChanges();
         } else {
-          return of(null);
+          return of("");
         }
       })
     );
   }
-  //Used for async away very easy to use when wrting data
+
   getUser() {
     return this.user$.pipe(first()).toPromise();
   }
@@ -43,7 +46,7 @@ export class AuthService {
   }
 
   private updateUserData({ uid, email, displayName, photoURL }) {
-    const userRef = this.afs.doc(`users/${uid}`);
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
 
     const data = {
       uid,
