@@ -1,58 +1,86 @@
-<ng-container *ngIf="(chat$ | async) as chat">
-  <ng-container *ngIf="(auth.user$ | async) as user">
-    <div class="top">
-      <p>
-        <a class="tag" routerLink="/">Back</a>
-        <span class="tag is-success">
-          http://localhost:4200/chats/{{ chat.id }}
-        </span>
-      </p>
-    </div>
-
-    <div #chatBox class="chat">
-      <div
-        class="msg animated zoomInUp"
-        *ngFor="let msg of chat.messages; trackBy: trackByCreated"
-      >
-        <div class="user">
-          <img
-            [src]="msg.user?.photoURL || 'assets/unicorn.svg'"
-            width="50px"
-          />
-          <div>
-            <span class="tag is-dark">{{
-              msg.user?.displayName || msg.user?.uid
-            }}</span>
-          </div>
-
-          <button
-            *ngIf="chat.uid === user.uid || msg.uid === user.uid"
-            class="button is-danger is-small"
-            (click)="cs.deleteMessage(chat, msg)"
-          >
-            Delete
-          </button>
-        </div>
-
-        <p>{{ msg.content }}</p>
+<div class="chat-room">
+  <ng-container *ngIf="(chat$ | async) as chat">
+    <ng-container *ngIf="(auth.user$ | async) as user">
+      <div class="top">
+        <a class="tag go-back" routerLink="/"><BACK</a>
+        <p>
+          Share this Firechat:
+          <span class="tag badge badge-dark">
+            http://localhost:4200/chats/{{ chat?.id }}
+          </span>
+        </p>
       </div>
-    </div>
-
-    <div class="form">
-      <input
-        class="input"
-        [(ngModel)]="newMsg"
-        maxlength="100"
-        (keydown.enter)="submit(chat.id)"
-      />
-
-      <button
-        (click)="submit(chat.id)"
-        class="button is-info"
-        [disabled]="!newMsg"
-      >
-        Send
-      </button>
-    </div>
+      <div class="col-md-8 col-xl-6 chat">
+        <div class="card">
+          <div class="card-header msg_head">
+            <div class="d-flex bd-highlight">
+              <div class="user_info">
+                <span>Chat: {{ chat.id }}</span>
+                <p class="msg-length">{{ chat?.messages.length }} Messages</p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card-body msg_card_body"
+            id="card-body"
+            #cardBody
+            [scrollTop]="cardBody.scrollHeight"
+          >
+            <div
+              class="msg"
+              *ngFor="let msg of chat.messages; trackBy: trackByCreated"
+            >
+              <div *ngIf="msg.uid === user.uid; else contact">
+                <div class="msg-wrapper-send">
+                  <div class="img_cont_msg">
+                    <img
+                      [src]="msg.user?.photoURL"
+                      class="rounded-circle user_img_msg"
+                    />
+                  </div>
+                  <div class="msg_cotainer">{{ msg.content }}</div>
+                  <span class="msg_time">{{ msg.createdAt | date }}</span>
+                </div>
+              </div>
+              <ng-template #contact>
+                <div class="msg-wrapper">
+                  <div class="msg_cotainer_send">{{ msg.content }}</div>
+                  <div class="img_cont_msg">
+                    <img
+                      [src]="msg.user?.photoURL"
+                      class="rounded-circle user_img_msg"
+                    />
+                  </div>
+                  <span class="msg_time_send">{{ msg.createdAt | date }}</span>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="form">
+          <div class="card-footer">
+            <div class="input-group">
+              <textarea
+                name=""
+                class="form-control type_msg"
+                placeholder="Type your message..."
+                (keydown.enter)="submit(chat.id)"
+                [(ngModel)]="newMsg"
+                maxlength="100"
+              ></textarea>
+              <div
+                class="input-group-append"
+                (click)="submit(chat.id)"
+                class="button is-info"
+              >
+                <span class="input-group-text send_btn"
+                  ><i class="fas fa-location-arrow"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </ng-container>
-</ng-container>
+</div>
