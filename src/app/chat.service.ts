@@ -32,7 +32,9 @@ export class ChatService {
     return this.auth.user$.pipe(
       switchMap(user => {
         return this.afs
-          .collection("chats", ref => ref.where("uid", "==", user.uid))
+          .collection("chats", ref =>
+            ref.where("users", "array-contains", user.uid)
+          )
           .snapshotChanges()
           .pipe(
             map(actions => {
@@ -54,7 +56,8 @@ export class ChatService {
       uid,
       createdAt: Date.now(),
       count: 0,
-      messages: []
+      messages: [],
+      users: []
     };
 
     const docRef = await this.afs.collection("chats").add(data);
@@ -64,7 +67,6 @@ export class ChatService {
 
   async sendMessage(chatId, content) {
     const { uid } = await this.auth.getUser();
-
     const data = {
       uid,
       content,
@@ -74,7 +76,8 @@ export class ChatService {
     if (uid) {
       const ref = this.afs.collection("chats").doc(chatId);
       return ref.update({
-        messages: firestore.FieldValue.arrayUnion(data)
+        messages: firestore.FieldValue.arrayUnion(data),
+        users: firestore.FieldValue.arrayUnion(uid)
       });
     }
   }
@@ -83,7 +86,6 @@ export class ChatService {
     const { uid } = await this.auth.getUser();
 
     const ref = this.afs.collection("chats").doc(chat.id);
-    console.log(msg);
     if (chat.uid === uid || msg.uid === uid) {
       // Allowed to delete
       delete msg.user;
