@@ -1,9 +1,191 @@
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.home {
+  margin: 16px;
+}
+
+.title-home {
+  color: #fff;
+  font-size: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 50px;
+  margin: 8px;
+}
+
+h3 {
+  color: white;
+}
+
 img {
   border-radius: 50%;
   display: block;
   margin: auto;
 }
 
-button {
-  margin: 10px;
+.is-info {
+  margin-left: 8px;
+}
+
+.chat {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 0;
+}
+
+.chat-info {
+  display: flex;
+  align-items: center;
+}
+.chat-info p {
+  margin: 0 0 0 8px;
+}
+
+.chat-info {
+  color: white;
+  font-size: 14px;
+}
+
+.chat-info i {
+  animation: blinker 1s linear infinite;
+}
+.card {
+  height: 60vh;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.contacts_body {
+  padding: 0.75rem 0;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+.msg_card_body {
+  overflow-y: auto;
+}
+.card-header {
+  border-radius: 15px 15px 0 0;
+  border-bottom: 0;
+}
+.card-footer {
+  border-radius: 0 0 15px 15px;
+  border-top: 0;
+}
+.container {
+  align-content: center;
+}
+
+.input-group-text.search_btn {
+  border-radius: 0 15px 15px 0;
+}
+.search {
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0;
+  color: white;
+}
+.search:focus {
+  box-shadow: none;
+  outline: 0px;
+}
+.type_msg {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0;
+  color: white;
+  height: 60px;
+  overflow-y: auto;
+}
+.type_msg:focus {
+  box-shadow: none;
+  outline: 0px;
+}
+.attach_btn {
+  border-radius: 15px 0 0 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0;
+  color: white;
+  cursor: pointer;
+}
+
+.search_btn {
+  border-radius: 0 15px 15px 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0;
+  color: white;
+  cursor: pointer;
+}
+.contacts {
+  list-style: none;
+  padding: 0;
+}
+.contacts li {
+  width: 100%;
+  padding: 5px 10px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgb(151, 147, 147);
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.chat-name span a {
+  color: white;
+  font-size: 14px;
+}
+
+.chat-name p {
+  color: white;
+  font-size: 10px;
+}
+
+.login-container {
+  width: 100%;
+  text-align: center;
+}
+#login {
+  height: 100vh;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  color: #fff;
+  font-size: 48px;
+  text-align: center;
+}
+
+.sub-title {
+  color: #fff;
+  font-size: 14px;
+}
+
+.login-container img {
+  height: 48px;
+  display: block;
+  cursor: pointer;
+}
+
+.btn-login {
+  margin: 16px;
+}
+
+@media only screen and (max-width: 600px) {
+  .profile-pic {
+    display: none;
+  }
 }

@@ -1,39 +1,85 @@
-<h1>Welcome to Mega Chat</h1>
+<div class="home">
+  <div class="login">
+    <div *ngIf="(auth.user$ | async) as user; else login">
+      <div class="header">
+        <div class="title-home">Howdy, {{ user.displayName }}</div>
+        <img [src]="user.photoURL" class="profile-pic" />
+      </div>
+      <button class="btn is-small btn-success" (click)="auth.signOut()">
+        Sign Out
+      </button>
+      <hr />
 
-<div class="login">
-  <div *ngIf="(auth.user$ | async) as user; else login">
-    <img [src]="user.photoURL" width="50px" />
-    <p>
-      <span class="tag is-dark">{{ user.displayName }}</span>
-      <span class="tag is-light">{{ user.uid }}</span>
-    </p>
+      <button class="btn btn-danger" routerLink="/chats/GSGUAIwGdNI85AMv8cF2">
+        Group FireChat 🎪
+      </button>
+      <button class="btn is-info btn-warning" (click)="cs.create()">
+        New Group Chat
+      </button>
+      <hr />
 
-    <button class="button is-small" (click)="auth.signOut()">Sign Out</button>
-    <hr />
+      <h3>My Chats <i class="far fa-comments"></i></h3>
+      <div class="col-md-4 col-xl-3 chat">
+        <div class="card mb-sm-3 mb-md-0 contacts_card">
+          <div class="card-header">
+            <div class="input-group">
+              <input
+                type="text"
+                placeholder="Search chat (coming soon)"
+                name=""
+                class="form-control search"
+                disabled
+              />
+              <div class="input-group-prepend">
+                <span class="input-group-text search_btn"
+                  ><i class="fas fa-search"></i
+                ></span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body contacts_body">
+            <div class="contacts">
+              <li
+                class="chat-preview"
+                *ngFor="let chat of (userChats$ | async)"
+              >
+                <a [routerLink]="'chats/' + chat.id">
+                  <div class="chat-name">
+                    <span> {{ chat.id }} </span>
+                    <div class="chat-info">
+                      <i class="far fa-envelope"></i>
+                      <p>{{ chat.messages.length }} Messages</p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </div>
+          </div>
+          <div class="card-footer"></div>
+        </div>
+      </div>
+    </div>
 
-    <button class="button" routerLink="/chats/kyH66qHUWBfjse079aIk">
-      Join Mega Chat 🎪
-    </button>
-    <button class="button is-info" (click)="cs.create()">
-      Create New Chat
-    </button>
-
-    <hr />
-
-    <h3>My Chats</h3>
-
-    <ul>
-      <li *ngFor="let chat of (userChats$ | async)">
-        <a [routerLink]="'chats/' + chat.id"
-          >{{ chat.id }} - {{ chat.messages.length }} Messages
-        </a>
-      </li>
-    </ul>
+    <ng-template #login>
+      <div id="login">
+        <div class="login-container">
+          <div class="title">
+            Welcome to Firechat <i class="far fa-comments"></i>
+          </div>
+          <div class="sub-title">Version 1.0</div>
+          <img
+            src="../../assets/google-logo.png"
+            alt=""
+            (click)="auth.googleSignIn()"
+          />
+          <button
+            class="btn btn-outline-danger btn-login"
+            (click)="auth.googleSignIn()"
+          >
+            Sign In
+          </button>
+        </div>
+      </div>
+    </ng-template>
   </div>
-
-  <ng-template #login>
-    <button class="button" (click)="auth.googleSignIn()">
-      Login with Google
-    </button>
-  </ng-template>
 </div>
