@@ -9,11 +9,12 @@ import {
 } from "@angular/fire/firestore";
 
 import { Observable, of } from "rxjs";
-import { switchMap, first, map } from "rxjs/operators";
+import { switchMap, first } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
   user$: Observable<any>;
+  userUID: string;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -42,24 +43,41 @@ export class AuthService {
 
   private async oAuthLogin(provider) {
     const credential = await this.afAuth.auth.signInWithPopup(provider);
-    return this.updateUserData(credential.user);
+    this.userUID = credential.user.uid;
+    return this.updateUserData(credential.user, "online");
   }
 
-  private updateUserData({ uid, email, displayName, photoURL }) {
+  private updateUserData(
+    { uid, email, displayName, photoURL },
+    status: string
+  ) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
-
     const data = {
       uid,
       email,
       displayName,
-      photoURL
+      photoURL,
+      status: status
     };
 
     return userRef.set(data, { merge: true });
   }
 
   async signOut() {
-    await this.afAuth.auth.signOut();
+    await this.afAuth.auth.signOut().then(() => {
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+        `users/${this.userUID}`
+      );
+      console.log("offline bro");
+      userRef.update({
+        status: "offline"
+      });
+      this.userUID = null;
+    });
     return this.router.navigate(["/"]);
+  }
+
+  getUsers(): any {
+    return this.afs.collection("users").valueChanges();
   }
 }
