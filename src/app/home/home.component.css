@@ -18,6 +18,10 @@
   align-items: center;
 }
 
+.img_cont {
+  position: relative;
+}
+
 .profile-pic {
   width: 50px;
   margin: 8px;
@@ -31,6 +35,10 @@ img {
   border-radius: 50%;
   display: block;
   margin: auto;
+}
+
+.profile-pic-list {
+  display: inline-block;
 }
 
 .is-info {
@@ -182,6 +190,28 @@ a {
 
 .btn-login {
   margin: 16px;
+}
+
+.online_icon {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: #4cd137;
+  border-radius: 50%;
+  bottom: 0.2em;
+  left: 2.5em;
+  border: 1.5px solid white;
+}
+
+.offline_icon {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: red;
+  border-radius: 50%;
+  bottom: 0.2em;
+  left: 2.5em;
+  border: 1.5px solid white;
 }
 
 @media only screen and (max-width: 600px) {

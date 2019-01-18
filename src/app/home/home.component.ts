@@ -10,9 +10,11 @@ import { map } from "rxjs/operators";
 })
 export class HomeComponent implements OnInit {
   userChats$;
+  users$;
   constructor(public auth: AuthService, public cs: ChatService) {}
 
   ngOnInit() {
     this.userChats$ = this.cs.getUserChats();
+    this.users$ = this.auth.getUsers();
   }
 }
