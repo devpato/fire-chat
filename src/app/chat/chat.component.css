@@ -96,8 +96,31 @@
 }
 
 .img_cont_msg {
+  position: relative;
   height: auto;
   width: auto;
+}
+
+.online_icon {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: #4cd137;
+  border-radius: 50%;
+  bottom: 0.2em;
+  right: 0;
+  border: 1.5px solid white;
+}
+
+.offline_icon {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: red;
+  border-radius: 50%;
+  bottom: 0.2em;
+  right: 0;
+  border: 1.5px solid white;
 }
 
 .user_info span {
@@ -153,6 +176,10 @@
 
   .go-back {
     display: none;
+  }
+
+  .card {
+    height: 425px;
   }
 }
 

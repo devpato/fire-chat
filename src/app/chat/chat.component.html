@@ -6,7 +6,7 @@
         <p>
           Share this Firechat:
           <span class="tag badge badge-dark">
-            http://localhost:4200/chats/{{ chat?.id }}
+            https://megachat-e414c.firebaseapp.com/chats/{{ chat?.id }}
           </span>
         </p>
       </div>
@@ -50,6 +50,13 @@
                       [src]="msg.user?.photoURL"
                       class="rounded-circle user_img_msg"
                     />
+                    <span
+                      class="{{
+                        user.status === 'online'
+                          ? 'online_icon'
+                          : 'offline_icon'
+                      }}"
+                    ></span>
                   </div>
                   <span class="msg_time_send">{{ msg.createdAt | date }}</span>
                 </div>
