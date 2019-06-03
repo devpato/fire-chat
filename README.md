@@ -1,6 +1,5 @@
-# Firechat
-
-Create chat rooms to talk with your friends.
+# Firechat🔥💬
+Create chat rooms to talk with your friends. 💬🔥
 
 https://megachat-e414c.web.app/
 
