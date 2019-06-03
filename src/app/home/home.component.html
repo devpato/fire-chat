@@ -1,14 +1,14 @@
 <div class="home">
   <div class="login">
     <div *ngIf="(auth.user$ | async) as user; else login">
-      <div *ngFor="let u of (users$ | async)">
+      <!-- <div *ngFor="let u of (users$ | async)">
         <div class="img_cont">
           <img [src]="u.photoURL" class="rounded-circle user_img profile-pic" />
           <span
             class="{{ u.status === 'online' ? 'online_icon' : 'offline_icon' }}"
           ></span>
         </div>
-      </div>
+      </div> -->
       <div class="header">
         <div class="title-home">Howdy, {{ user.displayName }}</div>
         <div class="img_cont">
